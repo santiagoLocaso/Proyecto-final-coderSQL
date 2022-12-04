@@ -316,7 +316,7 @@ DELIMITER ;
 -- -----------------------------------------------------
 -- function clientes_tramites
 -- funcion en la cual se ingresa el ID del cliente y retorna el tipo de tramite que este tiene asignado con la fecha
--- se utiliza de esta manera ---> select clientes_tramites(idCliente) as tramite_del_cliente;
+-- se utiliza de esta manera ---> select clientes_tramites(idCliente) as cliente, tipo, fecha from tramitesadministrativos;
 -- -----------------------------------------------------
 
 DELIMITER //
@@ -346,7 +346,7 @@ USE `estudiojuridico`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_clientes`(nom varchar(45),
 ape varchar(45),
 cel varchar(200),
-email varchar(45),
+correo varchar(45),
 dom varchar(200),
 DNI varchar(200),
 CUIT varchar(200),
@@ -355,10 +355,10 @@ estad varchar(45))
 begin
 declare existe_persona int;
 declare id int;
-set existe_persona = (select count(*) from clientes where email=email);
+set existe_persona = (select count(*) from clientes where email=correo);
 if existe_persona = 0 then
 	insert into clientes (nombre,apellido,celular,email,domicilio,DNI,CUIT,profesion,estadoCivil)
-	values(nom, ape, cel, email, dom, DNI, CUIT, prof, estad);
+	values(nom, ape, cel, correo, dom, DNI, CUIT, prof, estad);
     set id = last_insert_id();
 else
 	set id = 0;
